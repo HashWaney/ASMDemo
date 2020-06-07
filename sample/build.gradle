@@ -1,0 +1,43 @@
+apply plugin: 'groovy'
+apply plugin: 'maven'
+
+dependencies {
+    implementation gradleApi()
+    implementation localGroovy()
+
+    // 引入asm库
+    implementation 'org.ow2.asm:asm:6.0'
+    implementation 'org.ow2.asm:asm-commons:6.0'
+    implementation 'org.ow2.asm:asm-analysis:6.0'
+    implementation 'org.ow2.asm:asm-util:6.0'
+    implementation 'org.ow2.asm:asm-tree:6.0'
+    compileOnly 'com.android.tools.build:gradle:3.6.3', {
+        //这里注意需要保持版本一致，否则会报错
+        //排除gradle自带的asm库
+        exclude group: 'org.ow2.asm'
+    }
+
+    repositories {
+        jcenter()
+    }
+}
+
+// 调试模式下在本地生成仓库
+// 思考 如何生成远程仓库
+uploadArchives {
+    repositories.mavenDeployer {
+        //本地仓库路径. 放在项目根目录下的repo文件夹中
+        repository(url: uri('../repo'))
+
+        // group id  参考pom文件格式
+        pom.groupId = 'com.android.sample.asm'
+
+        // artifactId
+        pom.artifactId = 'sample_plugin'
+
+        // versioncode
+        pom.version = '1.0.6-SNAPSHOT'
+
+    }
+}
+
