@@ -1,4 +1,3 @@
 rootProject.name='CustomASMDemo'
 include ':app'
-include ':javaprocessor'
 include ':sample'
