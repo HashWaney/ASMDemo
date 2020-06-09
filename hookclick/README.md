@@ -1,4 +1,4 @@
-##原理
+## 原理
    
     在注册的Application.ActivityLifecycleCallbacks的onActivityResumed(Activity activity)回调方法中，
    
@@ -21,7 +21,7 @@
     而且要在Activity#onStop中移除removeOnGlobalLayoutListener
    
     
-##实现
+## 实现
 
    1、创建代理类WrapClickListener 
      
@@ -53,23 +53,23 @@
        
 ```java
             
-           import java.lang.reflect.Field;
-           import java.lang.reflect.Method;
-            import android.view.View;
-             public class HookClickHelper{
+    import java.lang.reflect.Field;
+    import java.lang.reflect.Method;
+    import android.view.View;
+    public class HookClickHelper{
              
-                public static final String TAG = "HookClickHelper";
+     public static final String TAG = "HookClickHelper";
                 
-                public static void hookClick(View view) throws  Exception{
-                    //1.反射得到ListenerInfo对象  思考🤔：：ListenerInfo包含了Listener的相关信息，长按事件onLongClick  普通点击事件onClick 等等
-                    Method getListenerInfo = View.class.getDeclaredMethod("getListenerInfo");
-                    //设置该方法可以被访问
-                    getListenerInfo.setAccessible(true);   
-                    //view.mListenerInfo;  拿不到是不是啊
-                    //通过方法来获取所不能访问的ListenerInfo对象
-                    // 其实这一步可以看作view.getListenerInfo =>> ListenerInfo 
-                    // 只不过反射是一种逆过程获取
-                    Object listenerInfo =getListenerInfo.invoke(view);
+     public static void hookClick(View view) throws  Exception{
+        //1.反射得到ListenerInfo对象  思考🤔：：ListenerInfo包含了Listener的相关信息，长按事件onLongClick  普通点击事件onClick 等等
+        Method getListenerInfo = View.class.getDeclaredMethod("getListenerInfo");
+         //设置该方法可以被访问
+         getListenerInfo.setAccessible(true);   
+          //view.mListenerInfo;  拿不到是不是啊
+         //通过方法来获取所不能访问的ListenerInfo对象
+         // 其实这一步可以看作view.getListenerInfo =>> ListenerInfo 
+          // 只不过反射是一种逆过程获取
+           Object listenerInfo =getListenerInfo.invoke(view);
     
     
                     //2.得到原始的OnClickListener事件方法
@@ -198,7 +198,7 @@
     3。OnGlobalLayoutListener API16+  
     
 
-##参考
+## 参考
    
   https://github.com/Omooo/Android-Notes
    
