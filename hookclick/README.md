@@ -1,4 +1,5 @@
 ##原理
+   
     在注册的Application.ActivityLifecycleCallbacks的onActivityResumed(Activity activity)回调方法中，
    
    **  获取的View对象是谁？？？ **
@@ -24,7 +25,7 @@
 
    1、创建代理类WrapClickListener 
      
-     ```java
+```java
             import android.util.Log;import android.view.View;
             
             public class WrapClickListener implements View.OnClickListener{
@@ -46,15 +47,14 @@
             }       
     
     
-        ```
+  ```
         
    2、代理OnClickListener事件
        
-           
-       ```java
+```java
             
-            import java.lang.reflect.Field;
-            import java.lang.reflect.Method;
+           import java.lang.reflect.Field;
+           import java.lang.reflect.Method;
             import android.view.View;
              public class HookClickHelper{
              
@@ -95,22 +95,24 @@
             
             }           
            
-         ```
+```
+         
    3、在Activity完全显示的时候遍历View动态代理OnClickListener
+   
         
-       ```java
+```java
             
-            import android.app.Application;
+          import android.app.Application;
+          import android.view.View;
+          import android.view.ViewGroup;
+          import android.view.ViewTreeObserver;
                 
-            import android.view.View;import android.view.ViewGroup;
-                import android.view.ViewTreeObserver;
-                
-               import android.app.ActivityLifecycleCallbacks;
+          import android.app.ActivityLifecycleCallbacks;
               
-               public class MyApplication extends Application{
+           public class MyApplication extends Application{
               
                 
-                 public static final String TAG ="MyApp";
+              public static final String TAG ="MyApp";
                 
                  @Override
                  public void onCreate(){
@@ -184,15 +186,17 @@
                 }       
                
               }       
-        
-            ```
+ ```
+            
   
 ## 优缺点
+
  优点： 动态性，可以监测到动态添加的view
  缺点：
     1。使用了反射，对APP整体性能🈶影响，也可能带来兼容性问题
     2。无法采集游离在Activity之上的view的点击，比如Dialog，PopupWindow
     3。OnGlobalLayoutListener API16+  
+    
 
 ##参考
    
