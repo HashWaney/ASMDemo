@@ -1,3 +1,4 @@
 rootProject.name='CustomASMDemo'
 include ':app'
 include ':sample'
+include ':hookclick'
